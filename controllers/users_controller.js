@@ -1,4 +1,5 @@
 const axios = require("axios");
+const User = require("../models/userSchema");
 
 module.exports.transactions = async function (req, res) {
   //async await
@@ -12,11 +13,25 @@ module.exports.transactions = async function (req, res) {
     );
 
     const listOfTransaction = transactionDetail.data.result;
+    let user = await User.findOne({ address: address });
+
+    if (!user) {
+      // creating new user
+      user = await User.create({
+        address: address,
+        transations: listOfTransaction,
+      });
+    } else {
+      // updating existing user
+      let transaction = [...user.transations, ...listOfTransaction];
+      user.transations = transaction;
+    }
+    user.save();
 
     return res.send({
       success: true,
       address: address,
-      data: listOfTransaction,
+      data: user.transations,
       message: "Transaction detail",
     });
   } catch (err) {
