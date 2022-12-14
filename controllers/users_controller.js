@@ -42,3 +42,56 @@ module.exports.transactions = async function (req, res) {
     });
   }
 };
+
+module.exports.balance = async function (req, res) {
+  //async await
+  try {
+    // getting address of user from params
+    const address = req.params.address;
+
+    // Finding user
+    let user = await User.findOne({ address: address });
+
+    if (!user) {
+      //user not found
+      return res.send({
+        success: true,
+        address: address,
+        message: "No User Found",
+      });
+    } else {
+      // Getting transaction of the user
+      let transaction = user.transations;
+
+      var currentBalance = 0;
+
+      for (let trans of transaction) {
+        if (trans.from == address) {
+          currentBalance -= parseInt(trans.value);
+        } else {
+          currentBalance += parseInt(trans.value);
+        }
+      }
+    }
+
+    const getPrice = await axios.get(
+      "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=inr"
+    );
+
+    const currentPrice = getPrice.data.ethereum;
+
+    return res.send({
+      success: true,
+      address: address,
+      currentBalance: currentBalance,
+      currentPrice: currentPrice,
+      message: "Balance detail",
+    });
+  } catch (err) {
+    console.log("Error in finding Balance detail", err);
+    return res.send({
+      success: false,
+      message: "Error in finding Balance detail",
+    });
+  }
+};
