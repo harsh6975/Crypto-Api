@@ -1,10 +1,17 @@
-module.exports.checkRouterWorking = async function (req, res) {
+const axios = require("axios");
+
+module.exports.price = async function (req, res) {
   //async await
   try {
-    console.log("Router working");
+    setInterval(async function () {
+      const getPrice = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=inr"
+      );
+    }, 1000*60*10); 
+
     return res.send({
       success: true,
-      message: "Router working",
+      message: "Router working and price fetching starts",
     });
   } catch (err) {
     console.log("Router not working");
