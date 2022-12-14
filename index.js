@@ -1,15 +1,16 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const route = require("./router/index_router");
 
-//importing env 
+// Importing env
 const dotenv = require("dotenv");
 dotenv.config();
 
 // Port for server
 const Port = 5000;
 
-//connecting Database
+// Connecting Database
 mongoose.set("strictQuery", false);
 
 mongoose
@@ -19,6 +20,9 @@ mongoose
   })
   .then(() => console.log("Database connected!"))
   .catch((err) => console.log("Error in connecting database", err));
+
+// Using express router
+app.use("/", route);
 
 //starting the server
 app.listen(Port, () => {
