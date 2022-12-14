@@ -16,10 +16,10 @@ Api to get information about crypto using NodeJs
 * Go to <a>http://localhost:5000/</a>
 
 
-APIs
-root/base - <a>https://cryptoapi-fow3.onrender.com</a>
-Fetching price of ethereum at interval of 10 min - https://cryptoapi-fow3.onrender.com
-Fetching transactions of user - https://cryptoapi-fow3.onrender.com/user/transactions/:address
-Getting current balance of user - https://cryptoapi-fow3.onrender.com/user/balance/:address
+APIs <br />
+root/base - <a>https://cryptoapi-fow3.onrender.com</a> <br />
+Fetching price of ethereum at interval of 10 min - https://cryptoapi-fow3.onrender.com <br />
+Fetching transactions of user - https://cryptoapi-fow3.onrender.com/user/transactions/:address <br />
+Getting current balance of user - https://cryptoapi-fow3.onrender.com/user/balance/:address <br />
 
 
