@@ -1,4 +1,5 @@
 const axios = require("axios");
+const Price = require("../models/priceSchema");
 
 module.exports.price = async function (req, res) {
   //async await
@@ -7,7 +8,13 @@ module.exports.price = async function (req, res) {
       const getPrice = await axios.get(
         "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=inr"
       );
-    }, 1000*60*10); 
+      const value = getPrice.data.ethereum.inr;
+      let price = await Price.create({
+        id: "ethereum",
+        currency: "inr",
+        value: value,
+      });
+    }, 1000 * 60 * 10);
 
     return res.send({
       success: true,
